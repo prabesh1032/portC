@@ -162,6 +162,58 @@
         
         .invisible { opacity: 0; }
         .visible { opacity: 1; }
+        
+        /* Mobile-specific optimizations */
+        @media (max-width: 640px) {
+            .glass-dark {
+                background: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(8px);
+            }
+            
+            .neon-glow {
+                box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+            }
+            
+            .neon-glow:hover {
+                box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+            }
+            
+            .hover-lift:hover {
+                transform: translateY(-5px) scale(1.01);
+            }
+            
+            .particle {
+                display: none;
+            }
+        }
+        
+        /* Smooth scrolling for mobile */
+        @media (max-width: 768px) {
+            html {
+                scroll-behavior: smooth;
+            }
+            
+            body {
+                overflow-x: hidden;
+            }
+            
+            /* Mobile menu animations */
+            #mobileMenu {
+                height: 100vh;
+                height: 100dvh; /* Dynamic viewport height for mobile */
+            }
+            
+            .mobile-nav-link {
+                border-radius: 12px;
+                margin: 4px 0;
+            }
+            
+            /* Hamburger animation styles */
+            #mobileMenuBtn span {
+                transform-origin: center;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
     </style>
 </head>
 <body class="bg-dark text-white font-poppins scroll-smooth overflow-x-hidden">
@@ -175,14 +227,14 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full" id="navbar">
+        <div class="w-full px-0">
+            <div class="flex justify-between items-center h-14 sm:h-16 px-4 sm:px-6 lg:px-8">
                 <div class="flex-shrink-0">
-                    <a href="#home" class="text-2xl font-bold text-gradient">SB</a>
+                    <a href="#home" class="text-xl sm:text-2xl font-bold text-gradient">SB</a>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
+                    <div class="ml-10 flex items-baseline space-x-6 lg:space-x-8">
                         <a href="#home" class="nav-link px-3 py-2 text-sm font-medium transition-colors duration-300 hover:text-primary">Home</a>
                         <a href="#about" class="nav-link px-3 py-2 text-sm font-medium transition-colors duration-300 hover:text-primary">About</a>
                         <a href="#skills" class="nav-link px-3 py-2 text-sm font-medium transition-colors duration-300 hover:text-primary">Skills</a>
@@ -191,23 +243,31 @@
                     </div>
                 </div>
                 <div class="md:hidden">
-                    <button id="mobileMenuBtn" class="p-2 rounded-lg glass hover:bg-white hover:bg-opacity-20 transition-all duration-300">
-                        <span class="block w-6 h-0.5 bg-white mb-1"></span>
-                        <span class="block w-6 h-0.5 bg-white mb-1"></span>
-                        <span class="block w-6 h-0.5 bg-white"></span>
+                    <button id="mobileMenuBtn" class="p-2 rounded-lg glass hover:bg-white hover:bg-opacity-20 transition-all duration-300 relative z-50">
+                        <div class="w-6 h-6 flex flex-col justify-center items-center">
+                            <span id="hamburger-line-1" class="block w-6 h-0.5 bg-white mb-1 transition-all duration-300 origin-center"></span>
+                            <span id="hamburger-line-2" class="block w-6 h-0.5 bg-white mb-1 transition-all duration-300 origin-center"></span>
+                            <span id="hamburger-line-3" class="block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+                        </div>
+                        <!-- X Icon (hidden by default) -->
+                        <div id="x-icon" class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </div>
                     </button>
                 </div>
             </div>
         </div>
         
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="md:hidden glass-dark transform -translate-y-full transition-transform duration-300">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#home" class="mobile-nav-link block px-3 py-2 text-base font-medium">Home</a>
-                <a href="#about" class="mobile-nav-link block px-3 py-2 text-base font-medium">About</a>
-                <a href="#skills" class="mobile-nav-link block px-3 py-2 text-base font-medium">Skills</a>
-                <a href="#projects" class="mobile-nav-link block px-3 py-2 text-base font-medium">Projects</a>
-                <a href="#contact" class="mobile-nav-link block px-3 py-2 text-base font-medium">Contact</a>
+        <div id="mobileMenu" class="md:hidden absolute top-full left-0 right-0 transform -translate-y-full opacity-0 transition-all duration-300 z-40">
+            <div class="bg-darker bg-opacity-95 backdrop-blur-md border border-gray-600 rounded-lg mx-4 mt-2 shadow-xl">
+                <a href="#home" class="mobile-nav-link block px-4 py-3 text-base font-medium text-white hover:text-primary hover:bg-white hover:bg-opacity-10 transition-all duration-300 first:rounded-t-lg">Home</a>
+                <a href="#about" class="mobile-nav-link block px-4 py-3 text-base font-medium text-white hover:text-primary hover:bg-white hover:bg-opacity-10 transition-all duration-300">About</a>
+                <a href="#skills" class="mobile-nav-link block px-4 py-3 text-base font-medium text-white hover:text-primary hover:bg-white hover:bg-opacity-10 transition-all duration-300">Skills</a>
+                <a href="#projects" class="mobile-nav-link block px-4 py-3 text-base font-medium text-white hover:text-primary hover:bg-white hover:bg-opacity-10 transition-all duration-300">Projects</a>
+                <a href="#contact" class="mobile-nav-link block px-4 py-3 text-base font-medium text-white hover:text-primary hover:bg-white hover:bg-opacity-10 transition-all duration-300 last:rounded-b-lg">Contact</a>
             </div>
         </div>
     </nav>
@@ -216,7 +276,20 @@
     <section id="home" class="min-h-screen relative flex items-center justify-center bg-gradient-animated">
         <div class="absolute inset-0 bg-black bg-opacity-40"></div>
         
-        <!-- Right Profile Photo -->
+        <!-- Mobile Profile Photo -->
+        <div class="absolute top-20 left-1/2 transform -translate-x-1/2 z-10 block lg:hidden">
+            <div class="relative perspective-1000">
+                <div class="w-24 h-24 sm:w-32 sm:h-32 relative preserve-3d invisible animate-slideInRight animate-delay-700">
+                    <div class="absolute inset-0 bg-gradient-to-br from-accent via-primary to-secondary rounded-full p-1 neon-glow animate-pulse-slow">
+                        <div class="w-full h-full rounded-full overflow-hidden">
+                            <img src="chowks.jpg" alt="Sandip Bhusal" class="w-full h-full object-cover rounded-full opacity-80 hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Desktop Profile Photo -->
         <div class="absolute right-8 top-1/2 transform -translate-y-1/2 z-10 hidden lg:block">
             <div class="relative perspective-1000">
                 <div class="w-56 h-56 relative preserve-3d invisible animate-slideInRight animate-delay-700">
@@ -231,18 +304,18 @@
         
         <div class="relative z-10 px-4 sm:px-6 lg:px-8 w-full">
             <div class="max-w-7xl mx-auto">
-                <div class="lg:w-2/3 text-left">
-                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 invisible animate-fadeInUp animate-delay-100">
+                <div class="lg:w-2/3 text-center lg:text-left mt-16 lg:mt-0">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 invisible animate-fadeInUp animate-delay-100 leading-tight">
                         Hi, I'm <span class="text-gradient">Sandip Bhusal</span>
                     </h1>
-                    <p class="text-xl sm:text-2xl mb-8 text-gray-300 invisible animate-fadeInUp animate-delay-300">
+                    <p class="text-lg sm:text-xl lg:text-2xl mb-6 sm:mb-8 text-gray-300 invisible animate-fadeInUp animate-delay-300">
                         Creative Developer & Digital Artist
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4 items-start invisible animate-fadeInUp animate-delay-500">
-                        <a href="#projects" class="px-8 py-4 bg-primary hover:bg-secondary text-white font-semibold rounded-full transition-all duration-300 hover-lift neon-glow">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center lg:items-start invisible animate-fadeInUp animate-delay-500">
+                        <a href="#projects" class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-primary hover:bg-secondary text-white font-semibold rounded-full transition-all duration-300 hover-lift neon-glow text-center">
                             View My Work
                         </a>
-                        <a href="#contact" class="px-8 py-4 glass hover:bg-white hover:bg-opacity-20 text-white font-semibold rounded-full transition-all duration-300 hover-lift">
+                        <a href="#contact" class="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 glass hover:bg-white hover:bg-opacity-20 text-white font-semibold rounded-full transition-all duration-300 hover-lift text-center">
                             Get In Touch
                         </a>
                     </div>
@@ -251,25 +324,25 @@
         </div>
         
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center">
-                <div class="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+        <div class="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white rounded-full flex justify-center">
+                <div class="w-1 h-2 sm:h-3 bg-white rounded-full mt-1 sm:mt-2 animate-pulse"></div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-darker relative">
+    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-darker relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-gradient section-title invisible">About Me</h2>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">About Me</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="invisible animate-slideInLeft">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div class="invisible animate-slideInLeft order-2 lg:order-1">
                     <div class="relative perspective-1000">
-                        <div class="w-80 h-80 mx-auto relative preserve-3d">
+                        <div class="w-64 sm:w-72 lg:w-80 h-64 sm:h-72 lg:h-80 mx-auto relative preserve-3d">
                             <div class="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent rounded-3xl rotate-y-12 hover:rotate-y-0 transition-transform duration-700 neon-glow p-1">
                                 <div class="w-full h-full rounded-2xl overflow-hidden">
                                     <img src="chowks.jpg" alt="Sandip Bhusal" class="w-full h-full object-cover rounded-2xl" />
@@ -278,25 +351,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="invisible animate-slideInRight">
-                    <h3 class="text-3xl font-bold mb-6">Creative Problem Solver</h3>
-                    <p class="text-lg text-gray-300 mb-6 leading-relaxed">
+                <div class="invisible animate-slideInRight order-1 lg:order-2">
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Creative Problem Solver</h3>
+                    <p class="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 leading-relaxed">
                         I'm Sandip Bhusal, a passionate full-stack developer from Nepal with a love for creating digital experiences that matter. With 4+ years of experience in web development, I specialize in building modern, responsive applications that blend creativity with functionality.
                     </p>
-                    <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                    <p class="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8 leading-relaxed">
                         When I'm not coding, you'll find me exploring the beautiful landscapes of Nepal, experimenting with new technologies, or contributing to open-source projects that make a difference in the developer community.
                     </p>
                     
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="glass-dark p-4 rounded-xl hover-lift">
-                            <div class="text-3xl mb-2">🎯</div>
-                            <h4 class="font-semibold mb-1">Focus</h4>
-                            <p class="text-sm text-gray-400">User Experience</p>
+                    <div class="grid grid-cols-2 gap-4 sm:gap-6">
+                        <div class="glass-dark p-3 sm:p-4 rounded-xl hover-lift">
+                            <div class="text-2xl sm:text-3xl mb-2">🎯</div>
+                            <h4 class="font-semibold mb-1 text-sm sm:text-base">Focus</h4>
+                            <p class="text-xs sm:text-sm text-gray-400">User Experience</p>
                         </div>
-                        <div class="glass-dark p-4 rounded-xl hover-lift">
-                            <div class="text-3xl mb-2">🚀</div>
-                            <h4 class="font-semibold mb-1">Mission</h4>
-                            <p class="text-sm text-gray-400">Innovation</p>
+                        <div class="glass-dark p-3 sm:p-4 rounded-xl hover-lift">
+                            <div class="text-2xl sm:text-3xl mb-2">🚀</div>
+                            <h4 class="font-semibold mb-1 text-sm sm:text-base">Mission</h4>
+                            <p class="text-xs sm:text-sm text-gray-400">Innovation</p>
                         </div>
                     </div>
                 </div>
@@ -305,89 +378,89 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-20 bg-light relative">
+    <section id="skills" class="py-12 sm:py-16 lg:py-20 bg-light relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-gradient section-title invisible">Skills & Expertise</h2>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Skills & Expertise</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 <!-- Frontend -->
-                <div class="glass-dark p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-100">
-                    <div class="text-5xl mb-4 animate-bounce-slow">⚡</div>
-                    <h3 class="text-2xl font-bold mb-4 text-primary">Frontend Magic</h3>
-                    <p class="text-gray-300 mb-6">Creating stunning user interfaces with modern technologies</p>
+                <div class="glass-dark p-6 sm:p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-100">
+                    <div class="text-4xl sm:text-5xl mb-4 animate-bounce-slow">⚡</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Frontend Magic</h3>
+                    <p class="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Creating stunning user interfaces with modern technologies</p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">React</span>
-                        <span class="px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-sm">Vue.js</span>
-                        <span class="px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-sm">TypeScript</span>
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">Tailwind</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">React</span>
+                        <span class="px-2 sm:px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-xs sm:text-sm">Vue.js</span>
+                        <span class="px-2 sm:px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-xs sm:text-sm">TypeScript</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">Tailwind</span>
                     </div>
                 </div>
                 
                 <!-- Backend -->
-                <div class="glass-dark p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-200">
-                    <div class="text-5xl mb-4 animate-spin-slow">⚙️</div>
-                    <h3 class="text-2xl font-bold mb-4 text-secondary">Backend Power</h3>
-                    <p class="text-gray-300 mb-6">Building robust and scalable server-side solutions</p>
+                <div class="glass-dark p-6 sm:p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-200">
+                    <div class="text-4xl sm:text-5xl mb-4 animate-spin-slow">⚙️</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-secondary">Backend Power</h3>
+                    <p class="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Building robust and scalable server-side solutions</p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">Node.js</span>
-                        <span class="px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-sm">Python</span>
-                        <span class="px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-sm">MongoDB</span>
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">PostgreSQL</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">Node.js</span>
+                        <span class="px-2 sm:px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-xs sm:text-sm">Python</span>
+                        <span class="px-2 sm:px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-xs sm:text-sm">MongoDB</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">PostgreSQL</span>
                     </div>
                 </div>
                 
                 <!-- Design -->
-                <div class="glass-dark p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-300">
-                    <div class="text-5xl mb-4 animate-wiggle">🎨</div>
-                    <h3 class="text-2xl font-bold mb-4 text-accent">Design Thinking</h3>
-                    <p class="text-gray-300 mb-6">Crafting beautiful and intuitive user experiences</p>
+                <div class="glass-dark p-6 sm:p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-300">
+                    <div class="text-4xl sm:text-5xl mb-4 animate-wiggle">🎨</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-accent">Design Thinking</h3>
+                    <p class="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Crafting beautiful and intuitive user experiences</p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">Figma</span>
-                        <span class="px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-sm">Adobe XD</span>
-                        <span class="px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-sm">UI/UX</span>
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">Prototyping</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">Figma</span>
+                        <span class="px-2 sm:px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-xs sm:text-sm">Adobe XD</span>
+                        <span class="px-2 sm:px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-xs sm:text-sm">UI/UX</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">Prototyping</span>
                     </div>
                 </div>
                 
                 <!-- Cloud -->
-                <div class="glass-dark p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-500">
-                    <div class="text-5xl mb-4 animate-float">☁️</div>
-                    <h3 class="text-2xl font-bold mb-4 text-primary">Cloud & DevOps</h3>
-                    <p class="text-gray-300 mb-6">Deploying and managing applications in the cloud</p>
+                <div class="glass-dark p-6 sm:p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-500">
+                    <div class="text-4xl sm:text-5xl mb-4 animate-float">☁️</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Cloud & DevOps</h3>
+                    <p class="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Deploying and managing applications in the cloud</p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">AWS</span>
-                        <span class="px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-sm">Docker</span>
-                        <span class="px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-sm">Kubernetes</span>
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">CI/CD</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">AWS</span>
+                        <span class="px-2 sm:px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-xs sm:text-sm">Docker</span>
+                        <span class="px-2 sm:px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-xs sm:text-sm">Kubernetes</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">CI/CD</span>
                     </div>
                 </div>
                 
                 <!-- Mobile -->
-                <div class="glass-dark p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-700">
-                    <div class="text-5xl mb-4 animate-pulse-slow">📱</div>
-                    <h3 class="text-2xl font-bold mb-4 text-secondary">Mobile Development</h3>
-                    <p class="text-gray-300 mb-6">Creating cross-platform mobile applications</p>
+                <div class="glass-dark p-6 sm:p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-700">
+                    <div class="text-4xl sm:text-5xl mb-4 animate-pulse-slow">📱</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-secondary">Mobile Development</h3>
+                    <p class="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Creating cross-platform mobile applications</p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">React Native</span>
-                        <span class="px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-sm">Flutter</span>
-                        <span class="px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-sm">Expo</span>
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">iOS/Android</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">React Native</span>
+                        <span class="px-2 sm:px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-xs sm:text-sm">Flutter</span>
+                        <span class="px-2 sm:px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-xs sm:text-sm">Expo</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">iOS/Android</span>
                     </div>
                 </div>
                 
                 <!-- Tools -->
-                <div class="glass-dark p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-100">
-                    <div class="text-5xl mb-4 animate-bounce">🛠️</div>
-                    <h3 class="text-2xl font-bold mb-4 text-accent">Development Tools</h3>
-                    <p class="text-gray-300 mb-6">Utilizing modern tools for efficient development</p>
+                <div class="glass-dark p-6 sm:p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-100">
+                    <div class="text-4xl sm:text-5xl mb-4 animate-bounce">🛠️</div>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-accent">Development Tools</h3>
+                    <p class="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Utilizing modern tools for efficient development</p>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">Git</span>
-                        <span class="px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-sm">VS Code</span>
-                        <span class="px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-sm">Webpack</span>
-                        <span class="px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-sm">Jest</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">Git</span>
+                        <span class="px-2 sm:px-3 py-1 bg-secondary bg-opacity-20 text-secondary rounded-full text-xs sm:text-sm">VS Code</span>
+                        <span class="px-2 sm:px-3 py-1 bg-accent bg-opacity-20 text-accent rounded-full text-xs sm:text-sm">Webpack</span>
+                        <span class="px-2 sm:px-3 py-1 bg-primary bg-opacity-20 text-primary rounded-full text-xs sm:text-sm">Jest</span>
                     </div>
                 </div>
             </div>
@@ -395,29 +468,29 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-darker relative">
+    <section id="projects" class="py-12 sm:py-16 lg:py-20 bg-darker relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-gradient section-title invisible">Featured Projects</h2>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Featured Projects</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 <!-- Project 1 -->
                 <div class="group perspective-1000 invisible animate-rotateIn animate-delay-100">
                     <div class="glass-dark rounded-2xl overflow-hidden hover-lift neon-glow preserve-3d">
-                        <div class="h-48 bg-gradient-to-br from-primary to-secondary relative overflow-hidden">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-primary to-secondary relative overflow-hidden">
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <div class="text-6xl animate-float">🌐</div>
+                                <div class="text-4xl sm:text-6xl animate-float">🌐</div>
                             </div>
                             <div class="absolute top-4 right-4">
                                 <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-primary">E-Commerce Platform</h3>
-                            <p class="text-gray-300 mb-4 text-sm">A full-featured online shopping platform with payment integration, inventory management, and admin dashboard.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 text-primary">E-Commerce Platform</h3>
+                            <p class="text-gray-300 mb-3 sm:mb-4 text-sm">A full-featured online shopping platform with payment integration, inventory management, and admin dashboard.</p>
+                            <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
                                 <span class="px-2 py-1 bg-primary bg-opacity-20 text-primary rounded text-xs">React</span>
                                 <span class="px-2 py-1 bg-secondary bg-opacity-20 text-secondary rounded text-xs">Node.js</span>
                                 <span class="px-2 py-1 bg-accent bg-opacity-20 text-accent rounded text-xs">MongoDB</span>
@@ -426,7 +499,7 @@
                                 <button class="flex-1 py-2 bg-primary hover:bg-secondary text-white rounded-lg transition-colors duration-300 text-sm font-semibold">
                                     Live Demo
                                 </button>
-                                <button class="px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
+                                <button class="px-3 sm:px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
                                     <span class="text-lg">🔗</span>
                                 </button>
                             </div>
@@ -437,18 +510,18 @@
                 <!-- Project 2 -->
                 <div class="group perspective-1000 invisible animate-rotateIn animate-delay-300">
                     <div class="glass-dark rounded-2xl overflow-hidden hover-lift neon-glow preserve-3d">
-                        <div class="h-48 bg-gradient-to-br from-secondary to-accent relative overflow-hidden">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-secondary to-accent relative overflow-hidden">
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <div class="text-6xl animate-bounce-slow">📱</div>
+                                <div class="text-4xl sm:text-6xl animate-bounce-slow">📱</div>
                             </div>
                             <div class="absolute top-4 right-4">
                                 <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-secondary">Task Manager App</h3>
-                            <p class="text-gray-300 mb-4 text-sm">A collaborative project management tool with real-time updates, team collaboration, and progress tracking.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 text-secondary">Task Manager App</h3>
+                            <p class="text-gray-300 mb-3 sm:mb-4 text-sm">A collaborative project management tool with real-time updates, team collaboration, and progress tracking.</p>
+                            <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
                                 <span class="px-2 py-1 bg-primary bg-opacity-20 text-primary rounded text-xs">Vue.js</span>
                                 <span class="px-2 py-1 bg-secondary bg-opacity-20 text-secondary rounded text-xs">Firebase</span>
                                 <span class="px-2 py-1 bg-accent bg-opacity-20 text-accent rounded text-xs">PWA</span>
@@ -457,7 +530,7 @@
                                 <button class="flex-1 py-2 bg-secondary hover:bg-primary text-white rounded-lg transition-colors duration-300 text-sm font-semibold">
                                     Live Demo
                                 </button>
-                                <button class="px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
+                                <button class="px-3 sm:px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
                                     <span class="text-lg">🔗</span>
                                 </button>
                             </div>
@@ -468,18 +541,18 @@
                 <!-- Project 3 -->
                 <div class="group perspective-1000 invisible animate-rotateIn animate-delay-500">
                     <div class="glass-dark rounded-2xl overflow-hidden hover-lift neon-glow preserve-3d">
-                        <div class="h-48 bg-gradient-to-br from-accent to-primary relative overflow-hidden">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-accent to-primary relative overflow-hidden">
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <div class="text-6xl animate-spin-slow">🎨</div>
+                                <div class="text-4xl sm:text-6xl animate-spin-slow">🎨</div>
                             </div>
                             <div class="absolute top-4 right-4">
                                 <div class="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-accent">Creative Portfolio</h3>
-                            <p class="text-gray-300 mb-4 text-sm">A stunning portfolio website with advanced animations, 3D effects, and interactive elements showcasing creative work.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 text-accent">Creative Portfolio</h3>
+                            <p class="text-gray-300 mb-3 sm:mb-4 text-sm">A stunning portfolio website with advanced animations, 3D effects, and interactive elements showcasing creative work.</p>
+                            <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
                                 <span class="px-2 py-1 bg-primary bg-opacity-20 text-primary rounded text-xs">Three.js</span>
                                 <span class="px-2 py-1 bg-secondary bg-opacity-20 text-secondary rounded text-xs">GSAP</span>
                                 <span class="px-2 py-1 bg-accent bg-opacity-20 text-accent rounded text-xs">WebGL</span>
@@ -488,7 +561,7 @@
                                 <button class="flex-1 py-2 bg-accent hover:bg-primary text-white rounded-lg transition-colors duration-300 text-sm font-semibold">
                                     Live Demo
                                 </button>
-                                <button class="px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
+                                <button class="px-3 sm:px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
                                     <span class="text-lg">🔗</span>
                                 </button>
                             </div>
@@ -499,18 +572,18 @@
                 <!-- Project 4 -->
                 <div class="group perspective-1000 invisible animate-rotateIn animate-delay-700">
                     <div class="glass-dark rounded-2xl overflow-hidden hover-lift neon-glow preserve-3d">
-                        <div class="h-48 bg-gradient-to-br from-purple-500 to-pink-500 relative overflow-hidden">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-purple-500 to-pink-500 relative overflow-hidden">
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <div class="text-6xl animate-wiggle">🤖</div>
+                                <div class="text-4xl sm:text-6xl animate-wiggle">🤖</div>
                             </div>
                             <div class="absolute top-4 right-4">
                                 <div class="w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-pink-400">AI Chat Assistant</h3>
-                            <p class="text-gray-300 mb-4 text-sm">An intelligent chatbot with natural language processing, machine learning, and personalized responses.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 text-pink-400">AI Chat Assistant</h3>
+                            <p class="text-gray-300 mb-3 sm:mb-4 text-sm">An intelligent chatbot with natural language processing, machine learning, and personalized responses.</p>
+                            <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
                                 <span class="px-2 py-1 bg-primary bg-opacity-20 text-primary rounded text-xs">Python</span>
                                 <span class="px-2 py-1 bg-secondary bg-opacity-20 text-secondary rounded text-xs">TensorFlow</span>
                                 <span class="px-2 py-1 bg-accent bg-opacity-20 text-accent rounded text-xs">NLP</span>
@@ -519,7 +592,7 @@
                                 <button class="flex-1 py-2 bg-pink-500 hover:bg-purple-500 text-white rounded-lg transition-colors duration-300 text-sm font-semibold">
                                     Live Demo
                                 </button>
-                                <button class="px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
+                                <button class="px-3 sm:px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
                                     <span class="text-lg">🔗</span>
                                 </button>
                             </div>
@@ -530,18 +603,18 @@
                 <!-- Project 5 -->
                 <div class="group perspective-1000 invisible animate-rotateIn animate-delay-100">
                     <div class="glass-dark rounded-2xl overflow-hidden hover-lift neon-glow preserve-3d">
-                        <div class="h-48 bg-gradient-to-br from-green-400 to-blue-500 relative overflow-hidden">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-green-400 to-blue-500 relative overflow-hidden">
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <div class="text-6xl animate-pulse-slow">📊</div>
+                                <div class="text-4xl sm:text-6xl animate-pulse-slow">📊</div>
                             </div>
                             <div class="absolute top-4 right-4">
                                 <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-green-400">Analytics Dashboard</h3>
-                            <p class="text-gray-300 mb-4 text-sm">A comprehensive analytics platform with real-time data visualization, reports, and business insights.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 text-green-400">Analytics Dashboard</h3>
+                            <p class="text-gray-300 mb-3 sm:mb-4 text-sm">A comprehensive analytics platform with real-time data visualization, reports, and business insights.</p>
+                            <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
                                 <span class="px-2 py-1 bg-primary bg-opacity-20 text-primary rounded text-xs">D3.js</span>
                                 <span class="px-2 py-1 bg-secondary bg-opacity-20 text-secondary rounded text-xs">Chart.js</span>
                                 <span class="px-2 py-1 bg-accent bg-opacity-20 text-accent rounded text-xs">Redis</span>
@@ -550,7 +623,7 @@
                                 <button class="flex-1 py-2 bg-green-500 hover:bg-blue-500 text-white rounded-lg transition-colors duration-300 text-sm font-semibold">
                                     Live Demo
                                 </button>
-                                <button class="px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
+                                <button class="px-3 sm:px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
                                     <span class="text-lg">🔗</span>
                                 </button>
                             </div>
@@ -561,18 +634,18 @@
                 <!-- Project 6 -->
                 <div class="group perspective-1000 invisible animate-rotateIn animate-delay-300">
                     <div class="glass-dark rounded-2xl overflow-hidden hover-lift neon-glow preserve-3d">
-                        <div class="h-48 bg-gradient-to-br from-yellow-400 to-red-500 relative overflow-hidden">
+                        <div class="h-40 sm:h-48 bg-gradient-to-br from-yellow-400 to-red-500 relative overflow-hidden">
                             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                                <div class="text-6xl animate-bounce">🎮</div>
+                                <div class="text-4xl sm:text-6xl animate-bounce">🎮</div>
                             </div>
                             <div class="absolute top-4 right-4">
                                 <div class="w-3 h-3 bg-yellow-400 rounded-full animate-pulse"></div>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold mb-2 text-yellow-400">Interactive Game</h3>
-                            <p class="text-gray-300 mb-4 text-sm">A fun and engaging web-based game with physics engine, multiplayer support, and leaderboards.</p>
-                            <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="p-4 sm:p-6">
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 text-yellow-400">Interactive Game</h3>
+                            <p class="text-gray-300 mb-3 sm:mb-4 text-sm">A fun and engaging web-based game with physics engine, multiplayer support, and leaderboards.</p>
+                            <div class="flex flex-wrap gap-2 mb-3 sm:mb-4">
                                 <span class="px-2 py-1 bg-primary bg-opacity-20 text-primary rounded text-xs">Phaser.js</span>
                                 <span class="px-2 py-1 bg-secondary bg-opacity-20 text-secondary rounded text-xs">Socket.io</span>
                                 <span class="px-2 py-1 bg-accent bg-opacity-20 text-accent rounded text-xs">Canvas</span>
@@ -581,7 +654,7 @@
                                 <button class="flex-1 py-2 bg-yellow-500 hover:bg-red-500 text-white rounded-lg transition-colors duration-300 text-sm font-semibold">
                                     Play Game
                                 </button>
-                                <button class="px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
+                                <button class="px-3 sm:px-4 py-2 glass hover:bg-white hover:bg-opacity-20 rounded-lg transition-all duration-300">
                                     <span class="text-lg">🔗</span>
                                 </button>
                             </div>
@@ -593,90 +666,90 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-light relative">
+    <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-light relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl sm:text-5xl font-bold mb-4 text-gradient section-title invisible">Let's Create Together</h2>
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Let's Create Together</h2>
                 <div class="w-24 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
-                <p class="text-xl text-gray-300 mt-6 invisible animate-fadeInUp animate-delay-200">
+                <p class="text-lg sm:text-xl text-gray-300 mt-4 sm:mt-6 invisible animate-fadeInUp animate-delay-200">
                     Ready to bring your ideas to life? Let's collaborate!
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class="invisible animate-slideInLeft">
-                    <div class="space-y-8">
-                        <div class="flex items-center space-x-4 group">
-                            <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 neon-glow">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                <div class="invisible animate-slideInLeft order-2 lg:order-1">
+                    <div class="space-y-6 sm:space-y-8">
+                        <div class="flex items-center space-x-3 sm:space-x-4 group">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-primary to-secondary rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:scale-110 transition-transform duration-300 neon-glow">
                                 📧
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold mb-1">Email</h3>
-                                <p class="text-gray-300">sandip.bhusal@email.com</p>
+                                <h3 class="text-lg sm:text-xl font-semibold mb-1">Email</h3>
+                                <p class="text-gray-300 text-sm sm:text-base">sandip.bhusal@email.com</p>
                             </div>
                         </div>
                         
-                        <div class="flex items-center space-x-4 group">
-                            <div class="w-16 h-16 bg-gradient-to-br from-secondary to-accent rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 neon-glow">
+                        <div class="flex items-center space-x-3 sm:space-x-4 group">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-secondary to-accent rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:scale-110 transition-transform duration-300 neon-glow">
                                 📱
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold mb-1">Phone</h3>
-                                <p class="text-gray-300">+977 98XXXXXXXX</p>
+                                <h3 class="text-lg sm:text-xl font-semibold mb-1">Phone</h3>
+                                <p class="text-gray-300 text-sm sm:text-base">+977 98XXXXXXXX</p>
                             </div>
                         </div>
                         
-                        <div class="flex items-center space-x-4 group">
-                            <div class="w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300 neon-glow">
+                        <div class="flex items-center space-x-3 sm:space-x-4 group">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-accent to-primary rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl group-hover:scale-110 transition-transform duration-300 neon-glow">
                                 📍
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold mb-1">Location</h3>
-                                <p class="text-gray-300">Bharatpur, Nepal</p>
+                                <h3 class="text-lg sm:text-xl font-semibold mb-1">Location</h3>
+                                <p class="text-gray-300 text-sm sm:text-base">Bharatpur, Nepal</p>
                             </div>
                         </div>
                         
-                        <div class="flex space-x-4 pt-6">
-                            <a href="#" class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-xl hover:scale-110 transition-transform duration-300 neon-glow">
+                        <div class="flex space-x-3 sm:space-x-4 pt-4 sm:pt-6">
+                            <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
                                 🔗
                             </a>
-                            <a href="#" class="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center text-xl hover:scale-110 transition-transform duration-300 neon-glow">
+                            <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
                                 🐙
                             </a>
-                            <a href="#" class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center text-xl hover:scale-110 transition-transform duration-300 neon-glow">
+                            <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
                                 📷
                             </a>
-                            <a href="#" class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-xl flex items-center justify-center text-xl hover:scale-110 transition-transform duration-300 neon-glow">
+                            <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
                                 🐦
                             </a>
                         </div>
                     </div>
                 </div>
                 
-                <div class="invisible animate-slideInRight">
-                    <form class="glass-dark p-8 rounded-3xl space-y-6 neon-glow">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="invisible animate-slideInRight order-1 lg:order-2">
+                    <form class="glass-dark p-6 sm:p-8 rounded-2xl sm:rounded-3xl space-y-4 sm:space-y-6 neon-glow">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div>
                                 <label class="block text-sm font-medium mb-2">Name</label>
-                                <input type="text" class="w-full px-4 py-3 bg-darker border border-gray-600 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-all duration-300" placeholder="Your Name">
+                                <input type="text" class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-darker border border-gray-600 rounded-lg sm:rounded-xl focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-all duration-300 text-sm sm:text-base" placeholder="Your Name">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2">Email</label>
-                                <input type="email" class="w-full px-4 py-3 bg-darker border border-gray-600 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-all duration-300" placeholder="your@email.com">
+                                <input type="email" class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-darker border border-gray-600 rounded-lg sm:rounded-xl focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-all duration-300 text-sm sm:text-base" placeholder="your@email.com">
                             </div>
                         </div>
                         
                         <div>
                             <label class="block text-sm font-medium mb-2">Subject</label>
-                            <input type="text" class="w-full px-4 py-3 bg-darker border border-gray-600 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-all duration-300" placeholder="Project Discussion">
+                            <input type="text" class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-darker border border-gray-600 rounded-lg sm:rounded-xl focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-all duration-300 text-sm sm:text-base" placeholder="Project Discussion">
                         </div>
                         
                         <div>
                             <label class="block text-sm font-medium mb-2">Message</label>
-                            <textarea rows="5" class="w-full px-4 py-3 bg-darker border border-gray-600 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-all duration-300 resize-none" placeholder="Tell me about your project..."></textarea>
+                            <textarea rows="4" class="w-full px-3 sm:px-4 py-2 sm:py-3 bg-darker border border-gray-600 rounded-lg sm:rounded-xl focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-20 outline-none transition-all duration-300 resize-none text-sm sm:text-base" placeholder="Tell me about your project..."></textarea>
                         </div>
                         
-                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:from-secondary hover:to-primary transition-all duration-300 hover-lift neon-glow">
+                        <button type="submit" class="w-full py-3 sm:py-4 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-lg sm:rounded-xl hover:from-secondary hover:to-primary transition-all duration-300 hover-lift neon-glow text-sm sm:text-base">
                             Send Message 🚀
                         </button>
                     </form>
@@ -705,30 +778,107 @@
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerLine1 = document.getElementById('hamburger-line-1');
+        const hamburgerLine2 = document.getElementById('hamburger-line-2');
+        const hamburgerLine3 = document.getElementById('hamburger-line-3');
+        const xIcon = document.getElementById('x-icon');
         let mobileMenuOpen = false;
 
-        mobileMenuBtn.addEventListener('click', () => {
+        function toggleMobileMenu() {
             mobileMenuOpen = !mobileMenuOpen;
             
             if (mobileMenuOpen) {
+                // Show menu and animate to X
                 mobileMenu.style.transform = 'translateY(0)';
+                mobileMenu.style.opacity = '1';
+                
+                // Add navbar background when menu is open
+                navbar.classList.add('glass-dark');
+                navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+                navbar.style.backdropFilter = 'blur(15px)';
+                
+                // Hide hamburger lines and show X icon
+                hamburgerLine1.style.opacity = '0';
+                hamburgerLine2.style.opacity = '0';
+                hamburgerLine3.style.opacity = '0';
+                
+                setTimeout(() => {
+                    xIcon.style.opacity = '1';
+                }, 150);
+                
             } else {
+                // Hide menu and animate back to hamburger
                 mobileMenu.style.transform = 'translateY(-100%)';
+                mobileMenu.style.opacity = '0';
+                
+                // Remove navbar background when menu is closed (unless scrolled)
+                if (window.scrollY <= 50) {
+                    navbar.classList.remove('glass-dark');
+                    navbar.style.backgroundColor = 'transparent';
+                    navbar.style.backdropFilter = '';
+                }
+                
+                // Hide X icon and show hamburger lines
+                xIcon.style.opacity = '0';
+                
+                setTimeout(() => {
+                    hamburgerLine1.style.opacity = '1';
+                    hamburgerLine2.style.opacity = '1';
+                    hamburgerLine3.style.opacity = '1';
+                }, 150);
             }
+        }
+
+        // Toggle menu on button click
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMobileMenu();
         });
 
         // Close mobile menu when clicking on links
         document.querySelectorAll('.mobile-nav-link').forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenuOpen = false;
-                mobileMenu.style.transform = 'translateY(-100%)';
+                if (mobileMenuOpen) {
+                    toggleMobileMenu();
+                }
             });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (mobileMenuOpen && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu when touching outside (for touch devices)
+        document.addEventListener('touchstart', (e) => {
+            if (mobileMenuOpen && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenuOpen) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu on window resize (if it gets too wide)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768 && mobileMenuOpen) {
+                toggleMobileMenu();
+            }
         });
 
         // Navbar Background on Scroll
         const navbar = document.getElementById('navbar');
         
         window.addEventListener('scroll', () => {
+            // Don't change navbar background if mobile menu is open
+            if (mobileMenuOpen) return;
+            
             if (window.scrollY > 50) {
                 navbar.classList.add('glass-dark');
                 navbar.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
@@ -820,58 +970,71 @@
             }, 8000);
         }
 
-        // Create particles periodically
-        setInterval(createParticle, 2000);
+        // Create particles periodically (reduced on mobile)
+        const particleInterval = window.innerWidth > 768 ? 2000 : 4000;
+        setInterval(createParticle, particleInterval);
 
-        // Initialize with some particles
-        for (let i = 0; i < 5; i++) {
+        // Initialize with some particles (fewer on mobile)
+        const initialParticles = window.innerWidth > 768 ? 5 : 2;
+        for (let i = 0; i < initialParticles; i++) {
             setTimeout(createParticle, i * 400);
         }
 
-        // Cursor Trail Effect
+        // Parallax Effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('#home');
+            const speed = scrolled * 0.5;
+            // Disable parallax on mobile for better performance
+            if (window.innerWidth > 768) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Disable cursor trail on mobile devices
         let mouseX = 0;
         let mouseY = 0;
         const trail = [];
+        
+        if (window.innerWidth > 768) {
+            for (let i = 0; i < 8; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'fixed pointer-events-none z-50';
+                dot.style.width = '6px';
+                dot.style.height = '6px';
+                dot.style.backgroundColor = '#ff6b35';
+                dot.style.borderRadius = '50%';
+                dot.style.opacity = (8 - i) / 8 * 0.5;
+                dot.style.transition = 'all 0.1s ease';
+                document.body.appendChild(dot);
+                trail.push(dot);
+            }
 
-        for (let i = 0; i < 8; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'fixed pointer-events-none z-50';
-            dot.style.width = '6px';
-            dot.style.height = '6px';
-            dot.style.backgroundColor = '#ff6b35';
-            dot.style.borderRadius = '50%';
-            dot.style.opacity = (8 - i) / 8 * 0.5;
-            dot.style.transition = 'all 0.1s ease';
-            document.body.appendChild(dot);
-            trail.push(dot);
-        }
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        function animateTrail() {
-            let x = mouseX;
-            let y = mouseY;
-
-            trail.forEach((dot, index) => {
-                dot.style.left = (x - 3) + 'px';
-                dot.style.top = (y - 3) + 'px';
-                
-                const nextDot = trail[index + 1] || trail[0];
-                if (nextDot) {
-                    x += (parseFloat(nextDot.style.left) + 3 - x) * 0.3;
-                    y += (parseFloat(nextDot.style.top) + 3 - y) * 0.3;
-                }
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
             });
 
-            requestAnimationFrame(animateTrail);
+            function animateTrail() {
+                let x = mouseX;
+                let y = mouseY;
+
+                trail.forEach((dot, index) => {
+                    dot.style.left = (x - 3) + 'px';
+                    dot.style.top = (y - 3) + 'px';
+                    
+                    const nextDot = trail[index + 1] || trail[0];
+                    if (nextDot) {
+                        x += (parseFloat(nextDot.style.left) + 3 - x) * 0.3;
+                        y += (parseFloat(nextDot.style.top) + 3 - y) * 0.3;
+                    }
+                });
+
+                requestAnimationFrame(animateTrail);
+            }
+
+            animateTrail();
         }
-
-        animateTrail();
-
-        // Form Validation and Submission
         const form = document.querySelector('form');
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -910,13 +1073,35 @@
         // Project Card Hover Effects
         document.querySelectorAll('.hover-lift').forEach(card => {
             card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-15px) scale(1.02)';
-                card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3)';
+                if (window.innerWidth > 768) {
+                    card.style.transform = 'translateY(-15px) scale(1.02)';
+                    card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.3)';
+                } else {
+                    card.style.transform = 'translateY(-5px) scale(1.01)';
+                    card.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.2)';
+                }
             });
             
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0) scale(1)';
                 card.style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.1)';
+            });
+            
+            // Touch events for mobile
+            card.addEventListener('touchstart', () => {
+                if (window.innerWidth <= 768) {
+                    card.style.transform = 'translateY(-5px) scale(1.01)';
+                    card.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.2)';
+                }
+            });
+            
+            card.addEventListener('touchend', () => {
+                if (window.innerWidth <= 768) {
+                    setTimeout(() => {
+                        card.style.transform = 'translateY(0) scale(1)';
+                        card.style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.1)';
+                    }, 150);
+                }
             });
         });
 
