@@ -165,18 +165,6 @@
         .invisible { opacity: 0; }
         .visible { opacity: 1; }
         
-        /* Scroll Animation Styles */
-        .section-animate {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .section-animate.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         /* Mobile-specific optimizations */
         @media (max-width: 640px) {
             .glass-dark {
@@ -353,7 +341,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-darker relative section-animate">
+    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-darker relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">About Me</h2>
@@ -402,7 +390,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-12 sm:py-16 lg:py-20 bg-light relative section-animate">
+    <section id="skills" class="py-12 sm:py-16 lg:py-20 bg-light relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Skills & Expertise</h2>
@@ -491,7 +479,7 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-12 sm:py-16 lg:py-20 bg-darker relative section-animate">
+    <section id="projects" class="py-12 sm:py-16 lg:py-20 bg-darker relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Featured Projects</h2>
@@ -599,7 +587,7 @@
     </section>
 
     <!-- Statistics/Achievements Section -->
-    <section id="stats" class="py-12 sm:py-16 lg:py-20 bg-light relative section-animate">
+    <section id="stats" class="py-12 sm:py-16 lg:py-20 bg-light relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">My Achievements</h2>
@@ -653,7 +641,7 @@
                 <div class="glass-dark p-6 sm:p-8 rounded-2xl hover-lift neon-glow invisible animate-scaleIn animate-delay-500 text-center">
                     <div class="text-3xl sm:text-4xl mb-3 animate-spin-slow">🚀</div>
                     <div class="text-xl sm:text-2xl lg:text-3xl font-bold mb-2 text-primary">
-                        <span class="counter" data-target="5">0</span>+
+                        <span class="counter" data-target="25">0</span>+
                     </div>
                     <h3 class="text-sm sm:text-base font-semibold text-gray-300">Projects Completed</h3>
                 </div>
@@ -680,7 +668,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-light relative section-animate">
+    <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-light relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Let's Create Together</h2>
@@ -1022,23 +1010,6 @@
         // Observe all elements with animation classes
         document.querySelectorAll('.invisible').forEach(el => {
             observer.observe(el);
-        });
-
-        // Section Scroll Animation Observer
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        // Observe all sections with section-animate class
-        document.querySelectorAll('.section-animate').forEach(section => {
-            sectionObserver.observe(section);
         });
 
         // Animated Counter Function
