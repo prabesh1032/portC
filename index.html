@@ -159,10 +159,23 @@
         .animate-delay-200 { animation-delay: 0.2s; }
         .animate-delay-300 { animation-delay: 0.3s; }
         .animate-delay-500 { animation-delay: 0.5s; }
+        .animate-delay-600 { animation-delay: 0.6s; }
         .animate-delay-700 { animation-delay: 0.7s; }
         
         .invisible { opacity: 0; }
         .visible { opacity: 1; }
+        
+        /* Scroll Animation Styles */
+        .section-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .section-animate.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
         
         /* Mobile-specific optimizations */
         @media (max-width: 640px) {
@@ -233,10 +246,10 @@
             <div class="flex justify-between items-center h-14 sm:h-16 px-4 sm:px-6 lg:px-8">
                 <div class="flex-shrink-0">
                     <a href="#home" class="flex items-center justify-center">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 relative group">
-                            <div class="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent rounded-full rotate-3 group-hover:rotate-6 transition-transform duration-300 neon-glow p-0.5"></div>
-                            <div class="relative w-full h-full bg-darker rounded-full overflow-hidden border-2 border-gradient-to-br from-primary/30 via-secondary/30 to-accent/30 group-hover:border-primary/60 transition-all duration-300">
-                                <img src="icon.webp" alt="Sandip Bhusal" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 relative group active:scale-95">
+                            <div class="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-accent rounded-full rotate-3 group-hover:rotate-6 group-active:rotate-6 transition-transform duration-300 neon-glow p-0.5"></div>
+                            <div class="relative w-full h-full bg-darker rounded-full overflow-hidden border-2 border-bg-white group-hover:border-primary/60 group-active:border-primary/60 transition-all duration-300">
+                                <img src="icon.webp" alt="Sandip Bhusal" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 rounded-full" />
                             </div>
                         </div>
                     </a>
@@ -340,7 +353,7 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-darker relative">
+    <section id="about" class="py-12 sm:py-16 lg:py-20 bg-darker relative section-animate">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">About Me</h2>
@@ -360,24 +373,24 @@
                     </div>
                 </div>
                 <div class="invisible animate-slideInRight order-1 lg:order-2">
-                    <h3 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gradient">Hello! I'm Sandip Bhusal</h3>
-                    <p class="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 leading-relaxed">
+                    <h3 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-gradient invisible animate-slideInLeft animate-delay-100">Hello! I'm Sandip Bhusal</h3>
+                    <p class="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 leading-relaxed invisible animate-slideInLeft animate-delay-200">
                         A passionate <span class="text-primary font-semibold">graphic designer</span> from Nepal. I specialize in creating clean, modern, and visually impactful designs for both digital and print platforms.
                     </p>
-                    <p class="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 leading-relaxed">
+                    <p class="text-base sm:text-lg text-gray-300 mb-4 sm:mb-6 leading-relaxed invisible animate-slideInLeft animate-delay-300">
                         With hands-on experience in <span class="text-secondary font-semibold">logo design</span>, <span class="text-accent font-semibold">social media creatives</span>, branding materials, and posters, I aim to turn ideas into visuals that tell a story. My design philosophy is simple: <span class="text-primary italic">make it meaningful, clear, and creative</span>.
                     </p>
-                    <p class="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8 leading-relaxed">
+                    <p class="text-base sm:text-lg text-gray-300 mb-6 sm:mb-8 leading-relaxed invisible animate-slideInLeft animate-delay-500">
                         I'm always excited to take on new challenges — whether it's a freelance project, a brand refresh, or collaboration with a creative team. <span class="text-gradient font-semibold">Let's connect and bring your vision to life!</span>
                     </p>
                     
                     <div class="grid grid-cols-2 gap-4 sm:gap-6">
-                        <div class="glass-dark p-4 sm:p-5 rounded-xl hover-lift border border-primary/20 hover:border-primary/40 transition-all duration-300">
+                        <div class="glass-dark p-4 sm:p-5 rounded-xl hover-lift border border-primary/20 hover:border-primary/40 transition-all duration-300 invisible animate-slideInLeft animate-delay-600">
                             <div class="text-2xl sm:text-3xl mb-2">🎨</div>
                             <h4 class="font-semibold mb-1 text-sm sm:text-base text-primary">Specialization</h4>
                             <p class="text-xs sm:text-sm text-gray-400">Graphic Design</p>
                         </div>
-                        <div class="glass-dark p-4 sm:p-5 rounded-xl hover-lift border border-secondary/20 hover:border-secondary/40 transition-all duration-300">
+                        <div class="glass-dark p-4 sm:p-5 rounded-xl hover-lift border border-secondary/20 hover:border-secondary/40 transition-all duration-300 invisible animate-slideInLeft animate-delay-700">
                             <div class="text-2xl sm:text-3xl mb-2">📊</div>
                             <h4 class="font-semibold mb-1 text-sm sm:text-base text-secondary">Philosophy</h4>
                             <p class="text-xs sm:text-sm text-gray-400">Meaningful & Creative</p>
@@ -389,7 +402,7 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-12 sm:py-16 lg:py-20 bg-light relative">
+    <section id="skills" class="py-12 sm:py-16 lg:py-20 bg-light relative section-animate">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Skills & Expertise</h2>
@@ -478,7 +491,7 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-12 sm:py-16 lg:py-20 bg-darker relative">
+    <section id="projects" class="py-12 sm:py-16 lg:py-20 bg-darker relative section-animate">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Featured Projects</h2>
@@ -586,7 +599,7 @@
     </section>
 
     <!-- Statistics/Achievements Section -->
-    <section id="stats" class="py-12 sm:py-16 lg:py-20 bg-light relative">
+    <section id="stats" class="py-12 sm:py-16 lg:py-20 bg-light relative section-animate">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">My Achievements</h2>
@@ -667,7 +680,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-light relative">
+    <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-light relative section-animate">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
                 <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gradient section-title invisible">Let's Create Together</h2>
@@ -717,10 +730,10 @@
                             <a href="https://instagram.com/iamsandip07_" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
                                 <i class="ri-instagram-fill text-white"></i>
                             </a>
-                            <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
+                            <a href="https://linkedin.com/in/sandip-bhusal-84297333a" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
                                 <i class="ri-linkedin-fill text-white"></i>
                             </a>
-                            <a href="#" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
+                            <a href="https://discord.com/invite/bef6kcK6?fbclid=IwY2xjawMAEe1leHRuA2FlbQIxMABicmlkETFnbXBMUWZrcHNJaEJZc0lKAR5Gg2EYiyPS00SJ-RCKPNl3dcWXPWxu2N89ED3CboJnTJWcMeb6tCrPyot4LA_aem_P5WDkWsP7NSw5ZwzArvzaA" class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl hover:scale-110 transition-transform duration-300 neon-glow">
                                 <i class="ri-discord-fill text-white"></i>
                             </a>
                         </div>
@@ -764,8 +777,8 @@
     <footer class="py-8 bg-darker border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <p class="text-gray-400">
-                    © 2025 Sandip Bhusal. Made with ❤️ in Nepal
+                <p class="text-gray-400 text-sm sm:text-base">
+                    © 2025 • <span class="text-gradient font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent ">SANDIP BHUSAL</span> — DESIGNED WITH <span class="text-red-500 animate-pulse text-lg">❤️</span>, CODED WITH <span class="text-yellow-400 animate-bounce text-lg">✨</span>IN <span class="text-green-500 font-bold">NEPAL</span>
                 </p>
                 <div class="mt-4 flex justify-center space-x-6">
                     <a href="#" class="text-gray-400 hover:text-primary transition-colors duration-300">Privacy</a>
@@ -777,6 +790,42 @@
     </footer>
 
     <script>
+        // Mobile logo touch interaction
+        const logoElement = document.querySelector('.flex-shrink-0 a');
+        if (logoElement) {
+            // Add touch feedback for mobile
+            logoElement.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                logoElement.style.transform = 'scale(0.95)';
+                logoElement.querySelector('.group > div:first-child').style.transform = 'rotate(6deg)';
+                logoElement.querySelector('img').style.opacity = '1';
+                logoElement.querySelector('.relative').style.borderColor = 'rgba(255, 107, 53, 0.6)';
+            });
+            
+            logoElement.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                logoElement.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    logoElement.querySelector('.group > div:first-child').style.transform = 'rotate(3deg)';
+                    logoElement.querySelector('img').style.opacity = '0.9';
+                    logoElement.querySelector('.relative').style.borderColor = 'rgba(255, 107, 53, 0.3)';
+                }, 100);
+                
+                // Navigate to home section
+                setTimeout(() => {
+                    document.querySelector('#home').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 150);
+            });
+            
+            // Prevent context menu on long press
+            logoElement.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+            });
+        }
+
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -959,6 +1008,13 @@
                 if (entry.isIntersecting) {
                     entry.target.classList.remove('invisible');
                     entry.target.classList.add('visible');
+                } else {
+                    // Reset animations for About section elements when they go out of view
+                    const aboutSection = document.getElementById('about');
+                    if (aboutSection && aboutSection.contains(entry.target)) {
+                        entry.target.classList.add('invisible');
+                        entry.target.classList.remove('visible');
+                    }
                 }
             });
         }, observerOptions);
@@ -968,11 +1024,35 @@
             observer.observe(el);
         });
 
+        // Section Scroll Animation Observer
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        // Observe all sections with section-animate class
+        document.querySelectorAll('.section-animate').forEach(section => {
+            sectionObserver.observe(section);
+        });
+
         // Animated Counter Function
+        let isAnimating = false;
         function animateCounters() {
+            if (isAnimating) return; // Prevent multiple simultaneous animations
+            isAnimating = true;
+            
             const counters = document.querySelectorAll('.counter');
             
             counters.forEach(counter => {
+                // Reset counter to 0
+                counter.textContent = '0';
+                
                 const target = parseFloat(counter.getAttribute('data-target'));
                 const duration = 2000; // 2 seconds
                 const step = target / (duration / 16); // 60fps
@@ -988,6 +1068,11 @@
                     }
                 }, 16);
             });
+            
+            // Reset animation flag after animation completes
+            setTimeout(() => {
+                isAnimating = false;
+            }, 2100);
         }
 
         // Intersection Observer for Stats Animation
@@ -1000,7 +1085,6 @@
                     // Start counter animation when stats section becomes visible
                     if (entry.target.id === 'stats') {
                         setTimeout(animateCounters, 500);
-                        statsObserver.unobserve(entry.target);
                     }
                 }
             });
