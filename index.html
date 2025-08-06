@@ -279,8 +279,8 @@
         <!-- Mobile Profile Photo -->
         <div class="absolute top-16 left-1/2 transform -translate-x-1/2 z-10 block lg:hidden">
             <div class="relative perspective-1000">
-                <div class="w-32 h-32 sm:w-40 sm:h-40 relative preserve-3d invisible animate-slideInRight animate-delay-700">
-                    <div class="absolute inset-0 bg-gradient-to-br from-accent via-primary to-secondary rounded-full p-1 neon-glow animate-pulse-slow">
+                <div class="w-48 h-48 sm:w-52 sm:h-52 relative preserve-3d invisible animate-slideInRight animate-delay-700">
+                    <div class="absolute inset-0 bg-gradient-to-br from-accent via-primary to-secondary rounded-full p-1 neon-glow">
                         <div class="w-full h-full rounded-full overflow-hidden">
                             <img src="chowks.jpg" alt="Sandip Bhusal" class="w-full h-full object-cover rounded-full opacity-80 hover:opacity-100 transition-opacity duration-300" />
                         </div>
@@ -304,7 +304,7 @@
         
         <div class="relative z-10 px-4 sm:px-6 lg:px-8 w-full">
             <div class="max-w-7xl mx-auto">
-                <div class="lg:w-2/3 text-center lg:text-left mt-8 lg:mt-0">
+                <div class="lg:w-2/3 text-center lg:text-left mt-60 sm:mt-64 lg:mt-0">
                     <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 invisible animate-fadeInUp animate-delay-100 leading-tight">
                         Hi, I'm <span class="text-gradient">Sandip Bhusal</span>
                     </h1>
@@ -855,6 +855,25 @@
         document.addEventListener('touchstart', (e) => {
             if (mobileMenuOpen && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
                 toggleMobileMenu();
+            }
+        });
+
+        // Additional touch event for better mobile support
+        document.addEventListener('touchend', (e) => {
+            if (mobileMenuOpen && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                e.preventDefault();
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu when touching the main content area
+        document.addEventListener('touchmove', (e) => {
+            if (mobileMenuOpen && !mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                const touch = e.touches[0];
+                const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                if (element && !mobileMenu.contains(element) && !mobileMenuBtn.contains(element)) {
+                    toggleMobileMenu();
+                }
             }
         });
 
